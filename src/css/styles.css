@@ -23,3 +23,37 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
+.timer-page {
+  display: flex;
+  flex-direction: column;
+  margin-top: 36px;
+}
+
+#datetime-picker {
+  width: 150px;
+  height: 20px;
+}
+
+button {
+  width: 95px;
+  height: 40px;
+  color: gray;
+}
+
+button:active {
+  color: black;
+}
+
+.timer {
+  display: flex;
+  gap: 25px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+}
+
+fieldset {
+  width: 220px;
+}
