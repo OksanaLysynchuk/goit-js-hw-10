@@ -8,13 +8,13 @@ const datetimePicker = document.getElementById('datetime-picker');
 const startBtn = document.querySelector('[data-start]');
 const timerFields = document.querySelectorAll('.value');
 
-let userSelectedDate;
+let userSelectedDate = new Date();
 
 function addLeadingZero(value) {
   return String(value).padStart(2, '0');
 }
 
-function updateTimer(days, hours, minutes, seconds) {
+function updateTimer({ days, hours, minutes, seconds }) {
   timerFields[0].textContent = addLeadingZero(days);
   timerFields[1].textContent = addLeadingZero(hours);
   timerFields[2].textContent = addLeadingZero(minutes);
@@ -62,12 +62,13 @@ class Timer {
   constructor({ onTick }) {
     this.onTick = onTick;
     this.interval = null;
+    this.endTime = null;
   }
 
   start() {
-    const endTime = userSelectedDate.getTime();
+    this.endTime = userSelectedDate.getTime();
     const now = Date.now();
-    const timeLeft = endTime - now;
+    const timeLeft = this.endTime - now;
 
     if (timeLeft <= 0) {
       this.stop();
@@ -76,7 +77,7 @@ class Timer {
 
     this.interval = setInterval(() => {
       const currentTime = Date.now();
-      const timeLeft = endTime - currentTime;
+      const timeLeft = this.endTime - currentTime;
       const time = convertMs(timeLeft);
 
       this.onTick(time);
@@ -97,7 +98,7 @@ class Timer {
 }
 
 const timer = new Timer({
-  onTick: updateTimer,
+  onTick: updateTimer.bind(this),
 });
 
 startBtn.addEventListener('click', () => {
